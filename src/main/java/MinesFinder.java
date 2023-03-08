@@ -31,14 +31,17 @@ public class MinesFinder extends JFrame {
     }
 
     private void easyGameBtnActionPerformed(ActionEvent e) {
-        new GameWindow("Easy Game").setVisible(true);
+        var window = new GameWindow("Easy Game", new MineField(9,9,10));
+        window.setVisible(true);
     }
 
     private void mediumGameBtnActionPerformed(ActionEvent e) {
-        new GameWindow("Medium Game").setVisible(true);
+        var window = new GameWindow("Medium Game", new MineField(16,16,40));
+        window.setVisible(true);
     }
 
     private void hardGameBtnActionPerformed(ActionEvent e) {
-        new GameWindow("Hard Game").setVisible(true);
+        var window = new GameWindow("Hard Game", new MineField(16,30,90));
+        window.setVisible(true);
     }
 }
