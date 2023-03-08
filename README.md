@@ -31,15 +31,11 @@ Mines Finder was developed using the following technologies:
 
 To install Mines Finder, follow these steps:
 
-1. Clone the repository to your local machine using the following command: git clone https://github.com/your-username/mines-finder.git
+1. Clone the repository to your local machine using the following command: git clone https://github.com/Paxicoo/minesfinder.git
 2. Open the project in your Java IDE of choice.
 3. Build and run the project.
 
 ## Credits
 
-Mines Finder was developed by [Your Name] for a Software Engineering class at [Your University]. 
-
-## License
-
-Mines Finder is licensed under the [MIT License](https://opensource.org/licenses/MIT). See the `LICENSE` file for details.
+Mines Finder was developed by Francisco Rosa for a Software Engineering class at Polytechnic Institute of Leiria. 
 
