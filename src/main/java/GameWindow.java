@@ -25,8 +25,8 @@ public class GameWindow extends JFrame {
             }
         }
 
-        // Destroys the window and releases any system resources associated with it.
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //set the default close operation for this window to close the window but not the application
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         // Sets the content pane of this window to the specified container.
         setContentPane(gamePanel);
