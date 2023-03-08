@@ -1,0 +1,39 @@
+# Maven build files
+target/
+pom.xml.backup
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.idea_modules/
+
+# Eclipse files
+.classpath
+.project
+.settings/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# Logs and data files
+*.log
+*.ser
+*.db
+
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+
+# macOS files
+.DS_Store
