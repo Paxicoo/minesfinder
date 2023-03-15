@@ -8,7 +8,7 @@ To play Mines Finder, follow these steps:
 
 1. Launch the game by running the `MinesFinder.java` file.
 2. Choose the level of difficulty by selecting one of the options presented (easy, medium, or hard).
-3. Click on a cell to uncover it. If the cell contains a mine, the game is over. If the cell does not contain a mine, a number will be displayed indicating how many mines are in the adjacent cells. Use this information to deduce the location of the mines and uncover more cells.
+3. Click on a cell to uncover it. If the cell contains a mine, the game is over. If the cell does not contain a mine, a number will be displayed indicating how many mines are in the adjacent cells. Use this information to deduce the location of the mines and uncover more cells. Right-click a cell to either mark as a Mine or with a question mark.
 4. Continue uncovering cells until all the cells except for the ones containing mines have been uncovered. The game is won at this point.
 
 ## Features
@@ -17,8 +17,7 @@ Mines Finder has the following features:
 
 - Three levels of difficulty: easy, medium, and hard.
 - A timer that keeps track of how long the player has been playing.
-- A scoreboard that displays the top 10 scores for each difficulty level.
-- An option to restart the game at any point.
+- A scoreboard that displays the high score for each difficulty level.
 
 ## Technologies Used
 
