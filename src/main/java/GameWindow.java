@@ -10,9 +10,12 @@ public class GameWindow extends JFrame {
     private int rowsNumber;
     private int columnsNumber;
 
-    public GameWindow(String title, MineField mineField) {
+    private HighScoreTable highScores;
+
+    public GameWindow(String title, MineField mineField, HighScoreTable highScores) {
         super(title);
         this.mineField = mineField;
+        this.highScores = new HighScoreTable();
 
         rowsNumber = mineField.getRowsNumber();
         columnsNumber = mineField.getColumnsNumber();
@@ -70,6 +73,12 @@ public class GameWindow extends JFrame {
                 //show a message dialog
                 JOptionPane.showMessageDialog(this, "Congratulations! You managed to find all the mines in "
                         + (mineField.getGameDuration()/1000)+" seconds.","Victory", JOptionPane.INFORMATION_MESSAGE);
+                boolean isHighScore = mineField.getGameDuration() < highScores.getTime();
+
+                if(isHighScore){
+                    String name = JOptionPane.showInputDialog(this, "You have a new high score! Enter your name: ");
+                    highScores.setRecord(name, mineField.getGameDuration());
+                }
             }
             // set visible false
             setVisible(false);
