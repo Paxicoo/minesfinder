@@ -1,10 +1,12 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class HighScoreTable {
+public class HighScoreTable implements Serializable {
     private String name;
     private long time;
 
-    private ArrayList<HighScoreListener> listeners;
+    // transient because it is not serializable, meaning it cannot be saved to a file and loaded back in again later on in the program
+    private transient ArrayList<HighScoreListener> listeners;
 
     public HighScoreTable() {
         this.name = "Anonymous";
@@ -13,16 +15,20 @@ public class HighScoreTable {
     }
 
     public void addHighScoreListener(HighScoreListener listener) {
+        if (listeners == null) listeners = new ArrayList<>();
         listeners.add(listener);
     }
 
     public void removeHighScoreListener(HighScoreListener listener) {
-        listeners.remove(listener);
+        if(listeners != null)
+            listeners.remove(listener);
     }
 
     private void notifyHighScoreListeners() {
-        for (HighScoreListener list : listeners) {
-            list.highScoresUpdated(this);
+        if (listeners != null) {
+            for (HighScoreListener list : listeners) {
+                list.highScoresUpdated(this);
+            }
         }
     }
 
