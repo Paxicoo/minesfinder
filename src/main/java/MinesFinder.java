@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,38 +31,29 @@ public class MinesFinder extends JFrame {
 
         readHighScoresOnDisk();
 
-        easyPlayerNameLabel.setText(easyHighScores.getName());
-        mediumPlayerNameLabel.setText(mediumHighScores.getName());
-        hardPlayerNameLabel.setText(hardHighScores.getName());
-        easyHighScoresLabel.setText(Long.toString(easyHighScores.getTime()/1000));
-        mediumHighScoresLabel.setText(Long.toString(mediumHighScores.getTime()/1000));
-        hardHighScoresLabel.setText(Long.toString(hardHighScores.getTime()/1000));
+        easyPlayerNameLabel.setText(easyHighScores.getName() + " : ");
+        mediumPlayerNameLabel.setText(mediumHighScores.getName() + " : ");
+        hardPlayerNameLabel.setText(hardHighScores.getName() + " : ");
+        easyHighScoresLabel.setText((easyHighScores.getTime()/1000) + " seconds");
+        mediumHighScoresLabel.setText((mediumHighScores.getTime()/1000) + " seconds");
+        hardHighScoresLabel.setText((hardHighScores.getTime()/1000) + " seconds");
 
-        easyHighScores.addHighScoreListener(new HighScoreListener() {
-            @Override
-            public void highScoresUpdated(HighScoreTable highScores) {
-                easyHighScoresUpdated(highScores);
-                storeHighScoresOnDisk();
-                System.out.println("Easy game high scores updated");
-            }
+        easyHighScores.addHighScoreListener(highScores -> {
+            easyHighScoresUpdated(highScores);
+            storeHighScoresOnDisk();
+            System.out.println("Easy game high scores updated");
         });
 
-        mediumHighScores.addHighScoreListener(new HighScoreListener() {
-            @Override
-            public void highScoresUpdated(HighScoreTable highScores) {
-                mediumHighScoresUpdated(highScores);
-                storeHighScoresOnDisk();
-                System.out.println("Medium game high scores updated");
-            }
+        mediumHighScores.addHighScoreListener(highScores -> {
+            mediumHighScoresUpdated(highScores);
+            storeHighScoresOnDisk();
+            System.out.println("Medium game high scores updated");
         });
 
-        hardHighScores.addHighScoreListener(new HighScoreListener() {
-            @Override
-            public void highScoresUpdated(HighScoreTable highScores) {
-                hardHighScoresUpdated(highScores);
-                storeHighScoresOnDisk();
-                System.out.println("Hard game high scores updated");
-            }
+        hardHighScores.addHighScoreListener(highScores -> {
+            hardHighScoresUpdated(highScores);
+            storeHighScoresOnDisk();
+            System.out.println("Hard game high scores updated");
         });
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -81,7 +69,7 @@ public class MinesFinder extends JFrame {
     }
 
     private void storeHighScoresOnDisk() {
-        ObjectOutputStream oos = null;
+        ObjectOutputStream oos;
         try {
             File f = new File(System.getProperty("user.home") + File.separator + "minesfinder.recordes");
             oos = new ObjectOutputStream(new FileOutputStream(f));
@@ -95,7 +83,7 @@ public class MinesFinder extends JFrame {
     }
 
     private void readHighScoresOnDisk() {
-        ObjectInputStream ois = null;
+        ObjectInputStream ois;
         File f = new File(System.getProperty("user.home")+File.separator+"minesfinder.recordes");
         if (f.canRead()) {
             try {
@@ -104,9 +92,7 @@ public class MinesFinder extends JFrame {
                 mediumHighScores=(HighScoreTable) ois.readObject();
                 hardHighScores=(HighScoreTable) ois.readObject();
                 ois.close();
-            } catch (IOException ex) {
-                Logger.getLogger(MinesFinder.class.getName()).log(Level.SEVERE,null, ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(MinesFinder.class.getName()).log(Level.SEVERE,null, ex);
             }
         }
@@ -114,17 +100,17 @@ public class MinesFinder extends JFrame {
 
     private void easyHighScoresUpdated(HighScoreTable highScores) {
         easyPlayerNameLabel.setText(highScores.getName() + " : ");
-        easyHighScoresLabel.setText(Long.toString(highScores.getTime() / 1000) + " seconds");
+        easyHighScoresLabel.setText((highScores.getTime() / 1000) + " seconds");
     }
 
     private void mediumHighScoresUpdated(HighScoreTable highScores) {
         mediumPlayerNameLabel.setText(highScores.getName() + " : ");
-        mediumHighScoresLabel.setText(Long.toString(highScores.getTime() / 1000) + " seconds");
+        mediumHighScoresLabel.setText((highScores.getTime() / 1000) + " seconds");
     }
 
     private void hardHighScoresUpdated(HighScoreTable highScores) {
         hardPlayerNameLabel.setText(highScores.getName() + " : ");
-        hardHighScoresLabel.setText(Long.toString(highScores.getTime() / 1000) + " seconds");
+        hardHighScoresLabel.setText((highScores.getTime() / 1000) + " seconds");
     }
 
     public static void main(String[] args) {
@@ -136,17 +122,17 @@ public class MinesFinder extends JFrame {
     }
 
     private void easyGameBtnActionPerformed(ActionEvent e) {
-        var window = new GameWindow("Easy Game", new MineField(9, 9, 10), easyHighScores);
+        var window = new GameWindow("Easy Game", new MineField(9, 9, 10), easyHighScores,600,600);
         window.setVisible(true);
     }
 
     private void mediumGameBtnActionPerformed(ActionEvent e) {
-        var window = new GameWindow("Medium Game", new MineField(16, 16, 40), mediumHighScores);
+        var window = new GameWindow("Medium Game", new MineField(16, 16, 40), mediumHighScores,900,750);
         window.setVisible(true);
     }
 
     private void hardGameBtnActionPerformed(ActionEvent e) {
-        var window = new GameWindow("Hard Game", new MineField(16, 30, 90), hardHighScores);
+        var window = new GameWindow("Hard Game", new MineField(16, 30, 90), hardHighScores,1500,780);
         window.setVisible(true);
     }
 }

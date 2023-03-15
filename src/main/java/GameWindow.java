@@ -4,18 +4,20 @@ import java.awt.event.*;
 
 public class GameWindow extends JFrame {
     private JPanel gamePanel;
-    private MineFieldButton[][] buttons;
-    private MineField mineField;
+    private final MineFieldButton[][] buttons;
+    private final MineField mineField;
 
-    private int rowsNumber;
-    private int columnsNumber;
+    private final int rowsNumber;
+    private final int columnsNumber;
 
-    private HighScoreTable highScores;
+    private final HighScoreTable highScores;
 
-    public GameWindow(String title, MineField mineField, HighScoreTable highScores) {
+    public GameWindow(String title, MineField mineField, HighScoreTable highScores, int windowWidth, int windowHeight) {
         super(title);
         this.mineField = mineField;
-        this.highScores = new HighScoreTable();
+        this.highScores = highScores;
+
+        gamePanel.setPreferredSize(new Dimension(windowWidth,windowHeight));
 
         rowsNumber = mineField.getRowsNumber();
         columnsNumber = mineField.getColumnsNumber();
@@ -46,6 +48,9 @@ public class GameWindow extends JFrame {
 
         // Makes the window visible.
         setVisible(true);
+
+        //set resizable false
+        setResizable(false);
     }
 
     //create a btnMineFieldActionPerformed method
@@ -77,6 +82,10 @@ public class GameWindow extends JFrame {
 
                 if(isHighScore){
                     String name = JOptionPane.showInputDialog(this, "You have a new high score! Enter your name: ");
+                    // if name is null or empty then set name to "Anonymous"
+                    if(name == null || name.isEmpty()){
+                        name = "Anonymous";
+                    }
                     highScores.setRecord(name, mineField.getGameDuration());
                 }
             }
@@ -144,9 +153,7 @@ public class GameWindow extends JFrame {
                 case KeyEvent.VK_DOWN -> buttons[(row + 1) % rowsNumber][column].requestFocus();
                 case KeyEvent.VK_LEFT -> buttons[row][--column < 0 ? columnsNumber - 1 : column].requestFocus();
                 case KeyEvent.VK_RIGHT -> buttons[row][(column + 1) % columnsNumber].requestFocus();
-                case KeyEvent.VK_M -> {
-                    markCell(row, column);
-                }
+                case KeyEvent.VK_M -> markCell(row, column);
             }
         }
 

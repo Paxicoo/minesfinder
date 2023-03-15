@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class MineField { // class for the minefield
-    private boolean[][] mines; // true if there is a mine in the cell
+    private final boolean[][] mines; // true if there is a mine in the cell
 
     public static final int EMPTY = 0; // empty cell
     /* from 1 through 8 are the number of mines in the surrounding cells */
@@ -10,11 +10,11 @@ public class MineField { // class for the minefield
     public static final int MARKED = 11; // marked cell
     public static final int EXPLODED = 12; // exploded mine
 
-    private int[][] state; // the state of each cell
+    private final int[][] state; // the state of each cell
 
-    private int rowsNumber; // number of rows in the minefield
-    private int columnsNumber; // number of columns in the minefield
-    private int minesNumber; // number of mines in the minefield
+    private final int rowsNumber; // number of rows in the minefield
+    private final int columnsNumber; // number of columns in the minefield
+    private final int minesNumber; // number of mines in the minefield
 
     private boolean firstClick = true; // true if it is the first click
 
