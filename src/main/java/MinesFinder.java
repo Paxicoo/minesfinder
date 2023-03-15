@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class MinesFinder extends JFrame {
 
@@ -21,6 +23,7 @@ public class MinesFinder extends JFrame {
         easyGameButton.addActionListener(this::easyGameBtnActionPerformed);
         mediumGameButton.addActionListener(this::mediumGameBtnActionPerformed);
         hardGameButton.addActionListener(this::hardGameBtnActionPerformed);
+
     }
     public static void main(String[] args) {
         new MinesFinder("Mines Finder").setVisible(true);

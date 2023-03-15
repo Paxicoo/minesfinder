@@ -21,6 +21,9 @@ public class MineField { // class for the minefield
     private boolean gameOver;
     private boolean gameWon;
 
+    private long startTime;
+    private long gameDuration;
+
     public MineField(int rowsNumber, int columnsNumber, int minesNumber) { // constructor
         this.rowsNumber = rowsNumber; // rowsNumber is the number of rows in the minefield
         this.columnsNumber = columnsNumber; // columnsNumber is the number of columns in the minefield
@@ -61,6 +64,8 @@ public class MineField { // class for the minefield
 
     //reveal cell
     public void revealCell(int row, int column){
+
+        // if cell is COVERED, change state to EMPTY
         if (state[row][column] < COVERED || gameOver) {
             return;
         }
@@ -68,6 +73,8 @@ public class MineField { // class for the minefield
         if(firstClick) {
             firstClick = false;
             placeMines(row, column);
+            //store in startTime the current time in milliseconds
+            startTime = System.currentTimeMillis();
         }
 
         //if cell has mine, change state to EXPLODED, set gameOver to true and inform the user that he lost
@@ -75,8 +82,12 @@ public class MineField { // class for the minefield
             state[row][column] = EXPLODED;
             gameOver = true;
             gameWon = false;
+            //store in gameDuration the time in milliseconds since the game started
+            gameDuration = System.currentTimeMillis() - startTime;
             return;
         }
+
+
 
         //if cell is empty, change state to EMPTY
         if (countSurroundingMines(row, column) == 0) {
@@ -87,6 +98,28 @@ public class MineField { // class for the minefield
             state[row][column] = countSurroundingMines(row, column);
         }
 
+        //if all cells are revealed, set gameOver to true and inform the user that he won
+        if (isWon()) {
+            //debug printline to see if the game is won
+            System.out.println("You won!");
+            gameOver = true;
+            gameWon = true;
+            //store in gameDuration the time in milliseconds since the game started
+            gameDuration = System.currentTimeMillis() - startTime;
+        }
+    }
+
+    //create a getGameDuration method to return the game duration
+    public long getGameDuration() {
+        //if first click has not been made, return 0
+        if (firstClick) {
+            return 0;
+        }
+        //if game is not over, return the time in milliseconds since the game started
+        if (!gameOver) {
+            return System.currentTimeMillis() - startTime;
+        }
+        return gameDuration;
     }
 
     //create private method to reveal surrounding cells
@@ -100,20 +133,20 @@ public class MineField { // class for the minefield
         }
     }
 
-    //create private method isWon
-    //TODO page 21 worksheet 2
+    //create private method isWon that returns true
     private boolean isWon() {
-        //check if all cells are revealed
-        for (var row = 0; row < rowsNumber; ++row) {
-            for (var column = 0; column < columnsNumber; ++column) {
-                if (state[row][column] == COVERED && !mines[row][column]) {
+        for (int i = 0; i < rowsNumber; ++i) {
+            for (int j = 0; j < columnsNumber; ++j) {
+                if (!mines[i][j] && state[i][j] >= COVERED) {
                     return false;
                 }
             }
         }
-
         return true;
     }
+    // this isWon method never returns true... i don't know why
+
+
 
     //create private method to count the number of mines in the surrounding cells
     private int countSurroundingMines(int row, int column) {
@@ -131,6 +164,29 @@ public class MineField { // class for the minefield
 
         return count;
     }
+
+    //create a markAsHavingMine method to mark a cell as having a mine, i.e. change the state of the cell to MARKED if the cell is COVERED or DOUBT
+    public void markAsHavingMine(int row, int column) {
+        if (state[row][column] == COVERED || state[row][column] == DOUBT) {
+            state[row][column] = MARKED;
+        }
+    }
+
+    //create a markAsSuspect method to mark a cell as suspect, i.e. change the state of the cell to DOUBT if the cell is COVERED or MARKED
+    public void markAsSuspect(int row, int column) {
+        if (state[row][column] == COVERED || state[row][column] == MARKED) {
+            state[row][column] = DOUBT;
+        }
+    }
+
+    // create a markOff method to mark a cell as off, i.e. change the state of the cell to COVERED if the cell is MARKED or DOUBT
+    public void markOff(int row, int column) {
+        if (state[row][column] == MARKED || state[row][column] == DOUBT) {
+            state[row][column] = COVERED;
+        }
+    }
+
+
 
     //create isGameOver method
     public boolean isGameOver() {

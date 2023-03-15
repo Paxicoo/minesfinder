@@ -4,7 +4,12 @@ import java.awt.*;
 public class MineFieldButton extends JButton {
     private int state;
 
-    public MineFieldButton() {
+    private int row;
+    private int column;
+
+    public MineFieldButton(int row, int column) {
+        this.row = row;
+        this.column = column;
         this.state = MineField.COVERED;
     }
 
@@ -13,11 +18,12 @@ public class MineFieldButton extends JButton {
         this.state = state;
         switch (state) {
             case MineField.COVERED:
-                setText("");
+                setText("     ");
                 setBackground(null);
                 break;
             case MineField.DOUBT:
                 setText("?");
+                setBackground(Color.YELLOW);
                 break;
             case MineField.MARKED:
                 setText("!");
@@ -37,6 +43,15 @@ public class MineFieldButton extends JButton {
                 setBackground(Color.LIGHT_GRAY);
         }
 
+    }
+
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 
 }
